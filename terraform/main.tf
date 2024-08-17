@@ -32,7 +32,4 @@ module "route53_acm" {
   dns_ttl = var.dns_ttl
 }
 
-output "ssl_certificate_arn" {
-  value = module.route53_acm.ssl_certificate.arn
-}
 
