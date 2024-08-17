@@ -24,5 +24,15 @@ output "DynamoDB_table_arn" {
 
 output "im_user_name" {
   value = module.backend.tf_user_arn
-
 }
+
+module "route53_acm" {
+  source = "./modules/route53_acm"
+  static_domain = var.static_domain
+  dns_ttl = var.dns_ttl
+}
+
+output "ssl_certificate_arn" {
+  value = module.route53_acm.ssl_certificate.arn
+}
+
