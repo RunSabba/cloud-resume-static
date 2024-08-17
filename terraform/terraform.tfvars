@@ -7,4 +7,3 @@ dns_ttl = 300
 static_bucket = "runsabba.com"
 force_destroy = false
 versioning_status = "Enabled"
-index_document = "index.html"

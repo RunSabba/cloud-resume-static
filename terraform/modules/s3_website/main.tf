@@ -20,7 +20,7 @@ resource "aws_s3_bucket_website_configuration" "website_configuration" {
   bucket = aws_s3_bucket.static_web_bucket.id
 
   index_document {
-    suffix = "index.hmtl"
+    suffix = "index.html"
   }
 }
 #configuring my bucket here to be public
