@@ -34,4 +34,5 @@ module "s3_website" {
   force_destroy = var.force_destroy
   versioning_status = var.versioning_status
   region = var.region
+  index_document = var.index_document
 }
