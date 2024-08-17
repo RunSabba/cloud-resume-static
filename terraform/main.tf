@@ -22,14 +22,16 @@ output "DynamoDB_table_arn" {
   value = module.backend.DynamoDB_table_arn
 }
 
-output "im_user_name" {
-  value = module.backend.tf_user_arn
-}
-
 module "route53_acm" {
   source = "./modules/route53_acm"
   static_domain = var.static_domain
   dns_ttl = var.dns_ttl
 }
 
-
+module "s3_website" {
+  source = "./modules/s3_website"
+  static_bucket = var.static_bucket
+  force_destroy = var.force_destroy
+  versioning_status = var.versioning_status
+  region = var.region
+}
