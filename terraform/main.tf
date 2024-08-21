@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 4.40"
     }
   }
 }
@@ -34,4 +34,13 @@ module "s3_website" {
   force_destroy = var.force_destroy
   versioning_status = var.versioning_status
   region = var.region
+}
+
+module "cloudfront_dist" {
+  source = "./modules/cloudfront_dist"
+  static_domain = var.static_domain
+  bucket_regional_domain_name = module.s3_website.bucket_regional_domain_name
+  static_bucket_id = module.s3_website.static_bucket_id
+  ssl_certificate_arn = module.route53_acm.ssl_certificate_arn
+  aws_route53_zoneID = module.route53_acm.aws_route53_zoneID
 }
