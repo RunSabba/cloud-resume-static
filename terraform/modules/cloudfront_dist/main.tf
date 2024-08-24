@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "static_website_distribution" {
     origin {
         domain_name = var.bucket_regional_domain_name
         origin_id = "S3-${var.static_bucket_id}"
-        origin_access_control_id = aws_cloudfront_origin_access_control.cloudfront_s3_oac.id # i needed to upgrade aws proivder to 4.40 to use this 
+        origin_access_control_id = aws_cloudfront_origin_access_control.cloudfront_s3_oac.id # i needed to upgrade aws proivder to 4.40 from ~> 3.0 to use this 
     }
 
     default_cache_behavior {
@@ -45,7 +45,7 @@ resource "aws_s3_bucket_policy" "cloudfront_oac_policy" {
   bucket = var.static_bucket_id
 
   policy = jsonencode({
-    Version = "2008-10-17"
+    Version = "2012-10-17"
     Id      = "PolicyForCloudFrontPrivateContent"
     Statement = [
       {
