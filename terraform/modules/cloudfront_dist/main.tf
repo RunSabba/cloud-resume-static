@@ -8,7 +8,7 @@ resource "aws_cloudfront_origin_access_control" "cloudfront_s3_oac" {
 }
 
 resource "aws_cloudfront_distribution" "static_website_distribution" {
-    enabled = true
+    enabled = true # enables CF distro
     is_ipv6_enabled = true
     default_root_object = "index.html"
     aliases = [var.static_domain] # you must use [] list format for aliases in terraform. aliases expect a list.
@@ -20,12 +20,12 @@ resource "aws_cloudfront_distribution" "static_website_distribution" {
     }
 
     default_cache_behavior {
-        allowed_methods = ["GET", "HEAD"]
-        cached_methods = ["GET", "HEAD"]
-        # Using AWS Managed-CachingOptimized cache policy
+        allowed_methods = ["GET", "HEAD"] #http methods allowed to be cached
+        cached_methods = ["GET", "HEAD"] #http methods that are actualy cahced
+        # Using AWS Managed-Caching Optimized cache policy
         cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
         target_origin_id = "S3-${var.static_bucket_id}"
-        viewer_protocol_policy = "redirect-to-https"
+        viewer_protocol_policy = "redirect-to-https" #redirects http traffic to https for security
     } 
 
     restrictions {
@@ -58,7 +58,7 @@ resource "aws_s3_bucket_policy" "cloudfront_oac_policy" {
         Resource = "arn:aws:s3:::${var.static_bucket_id}/*"
         Condition = {
           StringEquals = {
-            "AWS:SourceArn" = aws_cloudfront_distribution.static_website_distribution.arn
+            "AWS:SourceArn" = aws_cloudfront_distribution.static_website_distribution.arn #only the cf distro has direct access to the bucket.
           }
         }
       }
@@ -69,9 +69,9 @@ resource "aws_s3_bucket_policy" "cloudfront_oac_policy" {
 resource "aws_route53_record" "static_website_alias_record" {
     zone_id = var.aws_route53_zoneID
     name    = var.static_domain
-    type    = "A" #domain ----> ipv4
+    type    = "A" #domain ----> ipv4 
 
-    alias {
+    alias { #Below we're setting the alias. runsabba.com --> CF Distro --> s3 bucket
         name                   = aws_cloudfront_distribution.static_website_distribution.domain_name
         zone_id                = aws_cloudfront_distribution.static_website_distribution.hosted_zone_id
         evaluate_target_health =  true

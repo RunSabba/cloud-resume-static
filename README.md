@@ -20,7 +20,7 @@ The Cloud Resume Challenge is designed to showcase skills in cloud technologies,
    - **S3**: The resume website is hosted in an S3 bucket configured for static website hosting.
    - **CloudFront**: A CloudFront distribution is used to deliver the content with low latency and high transfer speeds.
    - **Route 53**: DNS management is handled via Route 53, pointing to the CloudFront distribution.
-   - **DynamoDB**: A DynamoDB table is used to track visitor counts.
+   - **DynamoDB**: Used for state locking
 
 ### 2. **GitHub Actions**
    - **Terraform Plan & Apply**: Automatically triggers Terraform to plan and apply changes when updates are pushed to the repository.
@@ -31,7 +31,7 @@ The Cloud Resume Challenge is designed to showcase skills in cloud technologies,
    - **S3**: Static site hosting.
    - **CloudFront**: Content delivery network (CDN) for the site.
    - **Route 53**: DNS configuration.
-   - **DynamoDB**: NoSQL database to store visitor counts.
+   - **DynamoDB**: Used for state locking.
 
 ## Prerequisites
 

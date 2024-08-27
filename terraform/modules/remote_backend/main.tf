@@ -31,7 +31,7 @@ resource "aws_s3_bucket_versioning" "versioning_enabled" {
   }
 }
 
-# S3 Bucket Policy
+# S3 Bucket Policy to allow terraform user to list/get/put state file in bucket
 resource "aws_s3_bucket_policy" "s3_bucket_policy" {
   bucket = aws_s3_bucket.tf-state-bucket.id
 
